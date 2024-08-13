@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Consultório odontológico</h1>
+    <form>
+        <p>Paciente: 
+            <input type="text" id="inNome" required>
+            <input type="submit" value="Adicionar Paciente">
+            <input type="button" id="inUrgencia" value="Adicionar com Urgência">
+            <input type="button" id="inAtender"  value="Atender">
+        </p>
+    </form>
+    <h3>Em atendimento: <span></span></h3>
+    <h4>Próximos atendimentos</h4>
+    <pre></pre>
+    <script>
+        const formu = document.querySelector("form")
+        const atendimento = document.querySelector("span")
+        const listaPacientes = document.querySelector("pre")
+
+        const pacientes = []
+
+        formu.addEventListener("submit", (e) =>{
+            e.preventDefault()
+            const nomePaciente = formu.inNome.value
+            pacientes.push(nomePaciente)
+            formu.inNome.value = ""
+            formu.inNome.focus()
+            let saida = ""
+            pacientes.forEach((ordem, i) =>(
+                saida = saida + (i + 1) + " " + pacientes[i] +"\n"
+            ))
+            listaPacientes.innerText = saida
+        })
+        formu.inUrgencia.addEventListener("click", ()=>{
+            const nomePacienteUrgente = formu.inNome.value
+            pacientes.unshift(nomePacienteUrgente)
+            let saida = ""
+            pacientes.forEach((ordem, i) =>(
+                saida = saida + (i + 1) + " " + pacientes[i] +"\n"
+            ))
+            listaPacientes.innerText = saida
+        })
+        formu.inAtender.addEventListener("click", () =>{
+            if(pacientes.length == 0){
+                alert("Não há paciêntes na lista de espera.")
+                return
+            }
+            const emAtendimento = pacientes.shift()
+            let saida = ""
+            atendimento.innerText = emAtendimento
+            pacientes.forEach((ordem, i) =>(
+                saida = saida + (i + 1) + " " + pacientes[i] +"\n"
+            ))
+            listaPacientes.innerText = saida
+        })
+    </script>
+</body>
+</html>

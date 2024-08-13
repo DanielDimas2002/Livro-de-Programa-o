@@ -1,0 +1,27 @@
+<script>
+    // Definindo uma função chamada situacao que recebe dois parâmetros: nota e media, sendo que media tem um valor padrão de 7 caso não seja especificado
+    function situacao(nota, media = 7){
+        // Verifica se a nota é maior ou igual à média
+        if(nota >= media){
+            // Se a condição for verdadeira, exibe um alerta "Aprovado"
+            alert("Aprovado");
+        } else {
+            // Se a condição for falsa, exibe um alerta "Reprovado"
+            alert("Reprovado");
+        }
+    }
+
+    // Definindo uma função chamada solicitarNota que solicita ao usuário uma nota e retorna o valor convertido para número
+    function solicitarNota() {
+        return Number(prompt("Qual a nota?"));
+    }
+
+    // Chamando a função solicitarNota para solicitar a nota do usuário e atribuindo o resultado à variável prova1
+    var prova1 = solicitarNota();
+
+    // Chamando a função situacao com os argumentos prova1 (nota do usuário) e 7 (média padrão)
+    situacao(prova1, 7);
+
+
+    
+</script>

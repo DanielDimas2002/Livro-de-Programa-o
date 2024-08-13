@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>FA - Função Anônima</h1>
+    <h2></h2>
+    <h3></h3>
+    <script>
+
+const relogio = document.querySelector("h2");  // Seleciona o elemento h2
+const relogioAnonimo = document.querySelector("h3");  // Seleciona o elemento h3
+
+function mostrarHora() {  // Declaração de uma função nomeada mostrarHora
+    const data = new Date();  // Cria um objeto Date representando o momento atual
+    const hora = data.getHours();  // Obtém a hora atual do objeto Date
+    const minutos = data.getMinutes();  // Obtém os minutos atuais do objeto Date
+    const segundos = data.getSeconds();  // Obtém os segundos atuais do objeto Date
+    let saida = "Daniel Dimas, e a hora certa: " + hora + ":" + minutos + ":" + segundos;  // Cria uma string com a hora formatada
+    relogio.innerHTML = saida;  // Atualiza o conteúdo do elemento h2 com a string da hora
+}
+
+// Chamar a função mostrarHora a cada segundo
+setInterval(mostrarHora, 1000);  // Chama a função mostrarHora a cada 1000 milissegundos (1 segundo)
+
+// Chamar a função mostrarHora uma vez para exibir a hora imediatamente
+mostrarHora();  // Chama a função mostrarHora uma vez para exibir a hora imediatamente
+
+// Função anônima para atualizar o segundo relógio
+setInterval(() => {  // Define uma função anônima que será executada a cada 1000 milissegundos (1 segundo)
+    const data = new Date();  // Cria um objeto Date representando o momento atual
+    const hora = data.getHours();  // Obtém a hora atual do objeto Date
+    const minutos = data.getMinutes();  // Obtém os minutos atuais do objeto Date
+    const segundos = data.getSeconds();  // Obtém os segundos atuais do objeto Date
+    let saida = "Daniel Dimas, e a hora certa: " + hora + ":" + minutos + ":" + segundos;  // Cria uma string com a hora formatada
+    relogioAnonimo.innerHTML = saida;  // Atualiza o conteúdo do elemento h3 com a string da hora
+}, 1000); // Define o intervalo de execução da função como 1000 milissegundos (1 segundo)
+
+</script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Jogo Descubra o Número</h1>
+    <form>
+        <p>
+            Número: 
+            <input type="number" min="1" required max="100" id="inNumero" autofocus> 
+            <input type="submit" id="inAdicionar" value="Apostar Número">
+            <input type="button" id="inReset" value="Jogar Novamente">
+        </p>
+    </form>
+    <h3>Erros: <span id="inErros"></span></h3>
+    <h3>Chances: <span id="inChances">10</span></h3>
+    <h4>Números apostados: <span id="inNumApostados"></span></h4>
+    <h4>Dicas: <span id="inDicas"></span></h4>
+    <script>
+        const formu = document.querySelector("form")
+        const Erros = document.querySelector("#inErros")
+        const Chances = document.querySelector("#inChances")
+        const Dicas = document.querySelector("#inDicas")
+        const Apostados = document.querySelector("#inNumApostados")
+
+        const numeroAleatorio = Math.floor(Math.random()*100)+1
+
+        let erros = 0
+        let chances = 10
+        let numeroApostados = []
+        
+        formu.addEventListener("submit", (e) =>{
+            const numeroApostado = Number(formu.inNumero.value)
+            if(numeroApostado == ""){
+                alert("Escolha pelo menos um número.")
+                return
+            }else if(numeroApostado == numeroAleatorio){
+                Dicas.innerHTML = "Parabéns! Você acertou! O número é: " + numeroApostado
+            }else{
+                ListaNumeros(numeroApostado)
+                contaErros()
+                contaChances()
+                darDicas(numeroApostado, numeroAleatorio)
+            }
+            e.preventDefault()
+        })
+
+        function contaErros(){
+            erros ++
+            Erros.innerHTML = erros
+        }
+
+        function contaChances(){    
+            chances --
+            Chances.innerHTML = chances
+        }
+
+        function ListaNumeros(numeroApostado){
+            if(numeroApostados.includes(numeroApostado)){
+                alert("Número já apostado")
+                return
+            }
+            numeroApostados.push(numeroApostado)
+            Apostados.innerHTML = numeroApostados 
+        }
+
+        function darDicas(numeroApostado, numeroAleatorio){
+            if(numeroAleatorio > numeroApostado){
+                Dicas.innerHTML = "O número é maior que: " + numeroApostado
+            }else{
+                Dicas.innerHTML = "O número é menor que: " + numeroApostado
+            }
+        }
+    </script>
+</body>
+</html>

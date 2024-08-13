@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- Título da página -->
+    <h1>Consultório odontológico</h1>
+    <!-- Formulário para adicionar pacientes -->
+    <form>
+        <p>Paciente: 
+            <!-- Campo de entrada para o nome do paciente -->
+            <input type="text" id="inNome" required>
+            <!-- Botão para adicionar paciente ao formulário -->
+            <input type="submit" value="Adicionar Paciente">
+            <!-- Botão para adicionar paciente com urgência -->
+            <input type="button" id="inUrgencia" value="Adicionar com Urgência">
+            <!-- Botão para atender o próximo paciente -->
+            <input type="button" id="inAtender"  value="Atender">
+        </p>
+    </form>
+    <!-- Título para o paciente em atendimento -->
+    <h3>Em atendimento: <span></span></h3>
+    <!-- Título para a lista de próximos atendimentos -->
+    <h4>Próximos atendimentos</h4>
+    <!-- Elemento para exibir a lista de pacientes -->
+    <pre></pre>
+    <!-- Script JavaScript -->
+    <script>
+        // Seleciona o formulário
+        const formu = document.querySelector("form");
+        // Seleciona o elemento para exibir o paciente em atendimento
+        const atendimento = document.querySelector("span");
+        // Seleciona o elemento para exibir a lista de pacientes
+        const listaPacientes = document.querySelector("pre");
+        // Array para armazenar os nomes dos pacientes
+        let pacientes = [];
+
+        // Event listener para o envio do formulário
+        formu.addEventListener("submit", (e) => {
+            // Impede o comportamento padrão de envio do formulário
+            e.preventDefault();
+            // Obtém o nome do paciente do campo de entrada e remove espaços em branco
+            const nomePaciente = formu.inNome.value.trim();
+            // Verifica se o nome do paciente não está vazio antes de adicionar
+            if (nomePaciente !== "") {
+                // Chama a função para adicionar o paciente
+                adicionaNome(nomePaciente);
+            }
+        });
+
+        // Função para adicionar paciente à lista
+        function adicionaNome(nomePaciente) {
+            // Adiciona o nome do paciente ao array de pacientes
+            pacientes.push(nomePaciente);
+            // Atualiza a lista de pacientes exibida
+            atualizaListaPacientes();
+            // Limpa o campo de entrada do nome do paciente e dá foco nele novamente
+            formu.inNome.value = "";
+            formu.inNome.focus();
+        }
+
+        // Event listener para adicionar paciente com urgência
+        formu.inUrgencia.addEventListener("click", () => {
+            // Obtém o nome do paciente com urgência do campo de entrada e remove espaços em branco
+            const nomePacienteUrgente = formu.inNome.value.trim();
+            // Verifica se o nome do paciente com urgência não está vazio antes de adicionar
+            if (nomePacienteUrgente !== "") {
+                // Chama a função para adicionar o paciente com urgência
+                pacienteUrgente(nomePacienteUrgente);
+            }
+        });
+
+        // Função para adicionar paciente com urgência à lista
+        function pacienteUrgente(nomePacienteUrgente) {
+            // Adiciona o nome do paciente com urgência no início do array de pacientes
+            pacientes.unshift(nomePacienteUrgente);
+            // Atualiza a lista de pacientes exibida
+            atualizaListaPacientes();
+            // Limpa o campo de entrada do nome do paciente e dá foco nele novamente
+            formu.inNome.value = "";
+            formu.inNome.focus();
+        }
+
+        // Event listener para atender o próximo paciente
+        formu.inAtender.addEventListener("click", () => {
+            // Verifica se há pacientes na lista de espera
+            if (pacientes.length === 0) {
+                // Alerta se não houver pacientes na lista de espera
+                alert("Não há pacientes na lista de espera.");
+            } else {
+                // Chama a função para atender o próximo paciente
+                atenderPaciente();
+            }
+        });
+
+        // Função para atender o próximo paciente da lista
+        function atenderPaciente() {
+            // Remove o primeiro paciente da lista (o que está em atendimento)
+            const emAtendimento = pacientes.shift();
+            // Exibe o paciente em atendimento
+            atendimento.innerText = emAtendimento;
+            // Atualiza a lista de pacientes exibida
+            atualizaListaPacientes();
+        }
+
+        // Função para atualizar a lista de pacientes exibida
+        function atualizaListaPacientes() {
+            // Formata a lista de pacientes com seus índices e os exibe no elemento "pre"
+            listaPacientes.innerText = pacientes.map((paciente, index) => `${index + 1}. ${paciente}`).join("\n");
+        }
+    </script>
+</body>
+</html>

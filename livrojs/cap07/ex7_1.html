@@ -1,0 +1,23 @@
+<script>
+    const anuncio = prompt("Anúncio:" ); //lê o anúncio
+    let numPalavras = 0; // inicializa contador
+    const tam = anuncio.length //obtém o tamanho
+    for(let i = 0; i< tam; i++){ // percorre os caracteres do anúncio
+        if(anuncio.charAt(i) == " "){ //se encontrou um espaço
+            numPalavras++; // incrementa contador
+        }
+    }
+// exibe anúncio e o número de palavras(que é o número de espaços + 1)
+    alert("Anúncio: " + anuncio + "\n" + "Palavras:" + (numPalavras + 1))
+
+    /* Vamos esclarecer o cálculo do número de palavras:
+
+        O script conta o número de espaços em branco no anúncio fornecido pelo usuário. 
+        A lógica é que o número de palavras é igual ao número de espaços em branco mais 1. 
+        Isso ocorre porque, na contagem usual de palavras em um texto, o número de espaços em branco é sempre um a menos que o número de palavras.
+        O loop `for` percorre cada caractere do anúncio e incrementa o contador `numPalavras` sempre que um espaço em branco é encontrado. No final do script, o resultado exibido no alerta é `(numPalavras + 1)`, que representa o número de espaços em branco mais 1, dando assim o número total de palavras.
+        Para uma explicação mais direta, imagine que você tem uma string `"Olá mundo, como vai?"`. Se contar os espaços em branco, você verá que há três espaços. No entanto, o número total de palavras é quatro ("Olá", "mundo,", "como", "vai?"). Assim, o número de espaços em branco mais 1 dá o número correto de palavras.
+    
+    */
+</script>
+

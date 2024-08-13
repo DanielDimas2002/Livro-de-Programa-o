@@ -1,0 +1,16 @@
+<script>
+    const bairro = prompt("Bairro de entrega. Escolha entre: Imbuí, Sete de Abril, Itapuã e Praia do Flamengo");
+    let TaxaDeEntrega
+    switch (bairro) {
+        case "Imbuí": TaxaDeEntrega = 5.00
+            break;
+        case "Sete de Abril": TaxaDeEntrega = 7.00
+            break;
+        case "Itapuã": TaxaDeEntrega = 4.00
+            break;
+        case "Praia do Flamengo": TaxaDeEntrega = 0.00
+            break;
+        default: TaxaDeEntrega = 20.00
+    }
+    alert("A taxa de entrega para este bairro é: R$" + TaxaDeEntrega);
+</script>

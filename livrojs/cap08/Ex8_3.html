@@ -1,0 +1,22 @@
+<script>
+    const calcularMedia = (...notas) => {
+        const num  = notas.length //notas é um vetor
+        if(num == 0){
+            console.log("Informe, no minimo, uma nota")
+            return
+        }
+        let soma = 0
+        for(const nota of notas){
+            soma += nota //soma o valor das argumentos
+        }
+        const media = soma/num // calcula a media
+        console.log("Média: " + media.toFixed(1))
+    }
+//exemplos de chamadas da calcularMedia() com número de parâmetro diferentes
+
+calcularMedia(6, 7, 8) //Média: 7.0
+calcularMedia(2, 10) //Média: 6.0
+calcularMedia(7.5, 10, 8, 9.5) //Média: 8.8
+calcularMedia(6, 7, 8) //Média: 7.0
+calcularMedia() //Informe, no minimo, uma nota
+</script>

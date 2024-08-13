@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revenda Avenida</title>
+
+    <!-- Estilos CSS -->
+    <style>
+        h1{
+            border-bottom-style: inset; /* Estilo da borda inferior do cabeçalho */
+        }
+        pre{
+            font-size: 1.2em; /* Tamanho da fonte */
+        }
+        span{
+            margin-left: 709px; /* Margem à esquerda */
+        }
+        select{
+            width: 150px; /* Largura do elemento select */
+        }
+        .detalhes{
+            width: 380px; /* Largura de elementos com classe detalhes */
+        }
+        .oculta{
+            display: none; /* Oculta elementos com a classe oculta */
+        }
+        .exibe{
+            display: inline; /* Exibe elementos com a classe exibe */
+        }
+    </style>
+
+</head>
+<body>
+    <h1>Revenda Avenida</h1> <!-- Cabeçalho da página -->
+    <form> <!-- Formulário para entrada de dados -->
+        <p>Modelo do Veículo <!-- Campo para inserção do modelo do veículo -->
+        <input type="text" id="inModelo" required autofocus> <!-- Campo de entrada de texto, obrigatório e com foco automático -->
+        </p>
+        <p>Ano de Fabricação <!-- Campo para inserção do ano de fabricação do veículo -->
+            <input type="number" id="inAno"  required> <!-- Campo de entrada numérica, obrigatório -->
+        </p>
+        <p>
+            Preço R$: 
+            <input type="number" min="0" step="0.01" id="inPreco" required> <!-- Campo para inserção do preço do veículo, com valor mínimo, passo e obrigatório -->
+        </p>
+        <input type="submit" value="Classificar - Calcular Entrada e Parcelas"> <!-- Botão de envio do formulário -->
+    </form>
+    <h3 id="outResp1"></h3> <!-- Área de saída para exibir a classificação do veículo -->
+    <h3 id="outResp2"></h3> <!-- Área de saída para exibir o valor da entrada -->
+    <h3 id="outResp3"></h3> <!-- Área de saída para exibir o valor das parcelas -->
+
+    <script>
+        const frm = document.querySelector("form") // Seleciona o formulário
+        const resp1 = document.querySelector("#outResp1") // Seleciona a área de saída para a classificação do veículo
+        const resp2 = document.querySelector("#outResp2") // Seleciona a área de saída para o valor da entrada
+        const resp3 = document.querySelector("#outResp3") // Seleciona a área de saída para o valor das parcelas
+
+        frm.addEventListener("submit", (e) =>{ // Adiciona um evento de submissão ao formulário
+            e.preventDefault() // Impede o comportamento padrão de envio do formulário
+            const modelo = frm.inModelo.value // Obtém o valor do modelo do veículo
+            const ano = Number(frm.inAno.value) // Obtém o valor do ano de fabricação do veículo e converte para número
+            const preco = Number(frm.inPreco.value) // Obtém o valor do preço do veículo e converte para número
+            const classificacao = classificarVeículo(ano) // Obtém a classificação do veículo com base no ano de fabricação
+            const entrada = calcularEntrada(preco, classificacao) // Calcula o valor da entrada com base no preço e na classificação do veículo
+            const parcela = (preco - entrada)/10 // Calcula o valor de cada parcela
+
+            // Atualiza as áreas de saída com os resultados
+            resp1.innerText = modelo + " - " + classificacao
+            resp2.innerText = "Entrada R$: " + entrada.toFixed(2)
+            resp3.innerText = "+10x de R$" + parcela.toFixed(2)
+        })
+
+        // Função para classificar o veículo com base no ano de fabricação
+        function classificarVeículo(ano){
+            const anoAtual = new Date().getFullYear() // Obtém o ano atual
+            let classf // Variável para armazenar a classificação do veículo
+            if(anoAtual == ano){
+                classf = "Novo" // Define como novo se o ano de fabricação for igual ao ano atual
+            }else if (ano == anoAtual - 1 || ano == anoAtual - 2) {
+                classf = "Seminovo" // Define como seminovo se o ano de fabricação for igual aos dois anos anteriores ao ano atual
+            }else{
+                classf = "Usado" // Define como usado caso contrário
+            }
+            return classf // Retorna a classificação do veículo
+        }
+
+        // Função para calcular o valor da entrada com base no preço e na classificação do veículo
+        function calcularEntrada(valor, status) {
+            if (status == "Novo") {
+                return valor * 0.5; // Retorna 50% do preço se o veículo for novo
+            } else {
+                return valor * 0.3; // Retorna 30% do preço se o veículo não for novo
+            }
+        }
+
+    </script>
+</body>
+</html>

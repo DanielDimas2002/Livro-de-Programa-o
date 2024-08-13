@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Jogos Eminatórios</h1>
+    <form>
+        <p>Clube: <input type="text" id="inNome"></p>
+        <p><input type="submit"  value="Adiconar"> <input type="button" value="Listar Clubes" id="btLista"> <input type="button" value="Mostrar tabela" id="btTabela"> </p>
+    </form>
+    <pre></pre>
+    
+    <script>
+        const formu = document.querySelector("form")
+        const resp = document.querySelector("pre")
+
+        const times = []
+
+        formu.addEventListener("submit", (e) => {
+            e.preventDefault()
+            const nomeTime = formu.inNome.value
+                if(times.includes(nomeTime)){
+                        alert("Time já cadastrado")
+                        return
+                    }
+            times.push(nomeTime)
+            let saida = ""
+                times.forEach((nomeTime, i) =>{
+                    saida = saida + nomeTime + "\n"
+                })
+            resp.innerText = saida
+            formu.inNome.value = ""
+            formu.inNome.focus()
+        })
+        formu.btLista.addEventListener("click", () =>{
+            if(times.length == 0){
+                alert("Não há times cadastrados")
+                return
+            }else{
+                let saida = ""
+                times.forEach((nomeTime, i) =>{
+                    saida = saida + nomeTime + "\n"
+                })
+            resp.innerText = saida
+            }
+        })
+        formu.btTabela.addEventListener("click", () =>{
+                let saida = ""
+                    if(times.length == 0){
+                        alert("Não há times cadastrados!")
+                        return
+                    }else if(times.length %2 != 0){
+                        alert("Não confrontos suficientes para todos os time! Verifique se o número de times cadastrados é par")
+                    }else{
+                const tabela = [...times]
+                    tabela.forEach((nomeTime,i)=>{
+                        const time1 = tabela.shift()
+                        const time2 = tabela.pop()
+                        saida = saida + time1 + "x" + time2 + "\n"
+                        resp.innerText = saida 
+                            if(tabela.length == 2){
+                               const team1 = tabela[0]
+                               const team2 = tabela[1]
+                                saida = saida + team1 + "x" + team2 + "\n"
+                                resp.innerText = saida 
+                            } 
+                })
+            }
+        })
+    </script>
+</body>
+</html>

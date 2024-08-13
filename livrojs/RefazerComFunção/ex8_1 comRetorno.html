@@ -1,0 +1,31 @@
+<script>
+   // Define uma variável global para armazenar a condição (Aprovado ou Reprovado)
+let condicao = "";
+
+// Função para determinar a situação do aluno com base na nota e média
+function situacao(nota, media = 7) {
+    // Verifica se a nota é maior ou igual à média
+    if (nota >= media) {
+        // Se for maior ou igual, o aluno está Aprovado
+        condicao = "Aprovado";
+    } else {
+        // Caso contrário, o aluno está Reprovado
+        condicao = "Reprovado";
+    }
+
+    // Retorna a condição (Aprovado ou Reprovado)
+    return condicao;
+}
+
+// Função para solicitar a nota do usuário e retornar como um número
+function solicitarNota() {
+    // Solicita ao usuário uma nota e a converte para número
+    return Number(prompt("Qual a nota?"));
+}
+
+// Solicita a nota do usuário e atribui à variável prova1
+var prova1 = solicitarNota();
+
+// Calcula a situação do aluno com base na nota fornecida e exibe o resultado
+situacao(prova1, 7);
+</script>

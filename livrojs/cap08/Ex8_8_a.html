@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        h1{border-bottom-style: inset;}
+        pre{font-size: 1.2em;}
+        span{margin-left: 70px;}
+        select{width: 150px;}
+        .detalhes{width: 300px;}
+        .oculta{display: none;}
+        .exibe{display: inline;}
+    </style>
+
+</head>
+<body>
+    <h1>Clube de Natação</h1>
+    <form>
+        <p>Nome do Atleta: 
+            <input type="text" required id="Nome">
+        </p>
+        <p>Idade: 
+            <input type="number" required id="Idade" min="1">
+        </p>
+        <input type="submit" value="Cadastrar">
+    </form>
+    <h3 id="SaídaNome"></h3>
+    <h3 id="SaídaTraços"></h3>
+    <h3 id="SaidaCategoria"></h3>
+    <script src="js/Ex8_8_a.js"></script>
+</body>
+</html>

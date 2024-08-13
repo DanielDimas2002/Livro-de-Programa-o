@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-4">
+                <img src="" alt="Tarefas" class="img-fluid">
+            </div>
+            <div class="col-sm-8" id="divQuadro">
+                <h1>Tarefas do Dia(a realizar)</h1>
+                <form>
+                    <p><label for="inTarefa">Tarefa:</label>
+                        <input type="text" class="form-control" id="inTarefa" required autofocus>
+                    </p>
+                    <p><input type="submit" class="btn-primary" value="Adicionar &#10003;">
+                        <input type="button" class="btn btn-info" value="Selecionar &#8645;" id="btnSelecionar">
+                        <input type="button" class="btn btn-danger" value="Retirar Selecionada &#1007;" id="btnRetirar">
+                        <input type="button" class="btn btn-success" value="Gravar &#9673;" id="btnGravar">
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="js/ex10_1.js"></script>
+</body>
+
+</html>

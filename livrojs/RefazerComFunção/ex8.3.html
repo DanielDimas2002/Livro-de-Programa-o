@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // Função para calcular a média das notas passadas como argumento
+        function calcularMedia(...notas){
+            // Determina o número de notas passadas como argumento
+            const num = notas.length
+            // Verifica se pelo menos uma nota foi passada como argumento
+            if(num == 0){
+                console.log("Informe, no mínimo, uma nota")
+                return
+            }
+            // Inicializa a variável soma para armazenar a soma das notas
+            let soma = 0
+            // Loop para somar todas as notas
+            for(let i = 0; i< num;i++){
+                soma += notas[i]
+            }
+            // Calcula a média das notas
+            const media = soma/num
+            // Exibe a média no console com duas casas decimais
+            console.log("Média: " + media.toFixed(2))
+        }
+        // Chamadas da função calcularMedia com diferentes conjuntos de notas
+        calcularMedia(6, 7, 8)
+        calcularMedia(2, 10)
+        calcularMedia(6, 7, 8, 9, 10)
+        // Chamada da função calcularMedia sem argumentos para testar a verificação de notas mínimas
+        calcularMedia()
+    </script>
+</body>
+</html>

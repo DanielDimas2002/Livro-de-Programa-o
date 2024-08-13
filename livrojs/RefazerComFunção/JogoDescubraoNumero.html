@@ -1,0 +1,90 @@
+<!DOCTYPE html> <!-- Declaração do tipo de documento -->
+<html lang="pt-br"> <!-- Início do elemento HTML com a linguagem definida como português do Brasil -->
+<head>
+    <meta charset="UTF-8"> <!-- Define o conjunto de caracteres como UTF-8 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Configura a visualização para dispositivos móveis -->
+    <title>Document</title> <!-- Define o título do documento -->
+</head>
+<body>
+    <h1>Jogo Descubra o Número</h1> <!-- Título principal da página -->
+    <form> <!-- Início de um formulário -->
+        <p>
+            Número: <!-- Label para entrada de número -->
+            <input type="number" min="1" required max="100" id="inNumero" autofocus> <!-- Campo de entrada de número com restrições de valor mínimo, máximo e obrigatório, além de estar com foco automaticamente -->
+            <input type="submit" id="inAdicionar" value="Apostar Número"> <!-- Botão de envio do formulário -->
+            <input type="button" id="inReset" value="Jogar Novamente"> <!-- Botão para jogar novamente -->
+        </p>
+    </form> <!-- Fim do formulário -->
+    <h3>Erros: <span id="inErros"></span></h3> <!-- Título para exibição do número de erros -->
+    <h3>Chances: <span id="inChances">10</span></h3> <!-- Título para exibição do número de chances, inicializado com 10 -->
+    <h4>Números apostados: <span id="inNumApostados"></span></h4> <!-- Título para exibição dos números já apostados -->
+    <h4>Dicas: <span id="inDicas"></span></h4> <!-- Título para exibição das dicas -->
+    <script>
+        const formu = document.querySelector("form") // Seleciona o formulário
+        const Erros = document.querySelector("#inErros") // Seleciona o elemento com o ID inErros
+        const Chances = document.querySelector("#inChances") // Seleciona o elemento com o ID inChances
+        const Dicas = document.querySelector("#inDicas") // Seleciona o elemento com o ID inDicas
+        const Apostados = document.querySelector("#inNumApostados") // Seleciona o elemento com o ID inNumApostados
+        const JogarNovamente = document.querySelector("#inReset") // Seleciona o elemento com o ID inReset
+
+        const numeroAleatorio = Math.floor(Math.random() * 100) + 1 // Gera um número aleatório entre 1 e 100
+
+        let erros = 0 // Inicializa o contador de erros
+        let chances = 10 // Inicializa o contador de chances
+        let numeroApostados = [] // Inicializa o vetor para armazenar os números apostados
+        
+        formu.addEventListener("submit", (e) => { // Adiciona um evento de submissão ao formulário
+            const numeroApostado = Number(formu.inNumero.value) // Obtém o valor do número apostado do campo de entrada
+            if (numeroApostado == "") { // Verifica se o campo de entrada está vazio
+                alert("Escolha pelo menos um número.") // Exibe um alerta caso o campo esteja vazio
+                return // Retorna para evitar o envio do formulário
+            } else if (numeroApostado == numeroAleatorio) { // Verifica se o número apostado é igual ao número aleatório
+                Dicas.innerHTML = "Parabéns! Você acertou! O número é: " + numeroApostado // Exibe uma mensagem de parabéns
+            } else { // Se não acertou o número
+                if (numeroApostados.includes(numeroApostado)) { // Verifica se o número já foi apostado
+                    alert("Número já apostado") // Exibe um alerta informando que o número já foi apostado
+                    e.preventDefault() // Impede a ação padrão do formulário
+                    return // Retorna para evitar o envio do formulário
+                }
+                ListaNumeros(numeroApostado) // Chama a função para adicionar o número à lista de apostados
+                contaErros() // Chama a função para contar os erros
+                contaChances() // Chama a função para contar as chances
+                darDicas(numeroApostado, numeroAleatorio) // Chama a função para dar dicas
+            }
+            e.preventDefault() // Impede a ação padrão do formulário
+        })
+
+        function contaErros() { // Função para contar os erros
+            erros++ // Incrementa o contador de erros
+            Erros.innerHTML = erros // Atualiza a exibição do número de erros
+        }
+
+        function contaChances() { // Função para contar as chances
+            chances-- // Decrementa o contador de chances
+            Chances.innerHTML = chances // Atualiza a exibição do número de chances
+        }
+
+        function ListaNumeros(numeroApostado) { // Função para adicionar o número à lista de apostados
+            if (numeroApostados.includes(numeroApostado)) { // Verifica se o número já está na lista
+                alert("Número já apostado") // Exibe um alerta informando que o número já foi apostado
+                return // Retorna para evitar a duplicação do número na lista
+            }
+            numeroApostados.push(numeroApostado) // Adiciona o número à lista de apostados
+            Apostados.innerHTML = numeroApostados // Atualiza a exibição dos números apostados
+        }
+
+        function darDicas(numeroApostado, numeroAleatorio) { // Função para dar dicas
+            if (numeroAleatorio > numeroApostado) { // Verifica se o número aleatório é maior que o apostado
+                Dicas.innerHTML = "O número é maior que: " + numeroApostado // Exibe uma dica informando que o número é maior
+            } else { // Se não for maior
+                Dicas.innerHTML = "O número é menor que: " + numeroApostado // Exibe uma dica informando que o número é menor
+            }
+        }
+
+        JogarNovamente.addEventListener("click", () => { // Adiciona um evento de clique no botão jogar novamente
+            location.reload() // Recarrega a página
+        })
+
+    </script>
+</body>
+</html>

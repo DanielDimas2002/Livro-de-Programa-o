@@ -1,4 +1,4 @@
-/**
+ /**
  * @type { Object.<string, import("knex").Knex.Config> }
  */
 module.exports = {

@@ -27,6 +27,22 @@ app.post('/filmes', (req, res) => {
     res.send(`Filme: ${titulo} - Gênero: ${genero}, recebido...`);
 });
 
+// Middleware de logging que registra a data e hora da requisição
+const log = (req, res, next) => {
+    // Exibe no console a data e hora exata em que a rota foi acessada
+    console.log(`.................. Acessado em ${new Date()}`);
+
+    // Chama a próxima função na cadeia de middlewares (ou o handler da rota)
+    next();
+}
+
+// Configura uma rota GET para "/transfere"
+// Essa rota utiliza o middleware 'log' antes de responder à requisição
+app.get("/transfere", log, (req, res) => {
+    // Responde ao cliente confirmando a transferência
+    res.send("Ok! Valor transferido com sucesso!");
+});
+
 // Inicia o servidor para escutar na porta definida
 app.listen(port, () => {
     // Exibe uma mensagem no console indicando que o servidor está rodando e acessível

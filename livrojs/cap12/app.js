@@ -14,6 +14,19 @@ app.get('/', (req, res) => {
     res.send("Olá... Bem-vindo!");
 });
 
+// Middleware para permitir que o Express faça o parsing (análise) de JSON no corpo das requisições
+app.use(express.json());
+
+// Configura uma rota POST para a URL '/filmes'
+// Essa rota recebe dados do corpo da requisição e responde com uma mensagem formatada
+app.post('/filmes', (req, res) => {
+    // Extrai os campos 'titulo' e 'genero' do corpo da requisição (JSON enviado pelo cliente)
+    const { titulo, genero } = req.body;
+
+    // Retorna uma resposta ao cliente informando que o filme foi recebido
+    res.send(`Filme: ${titulo} - Gênero: ${genero}, recebido...`);
+});
+
 // Inicia o servidor para escutar na porta definida
 app.listen(port, () => {
     // Exibe uma mensagem no console indicando que o servidor está rodando e acessível

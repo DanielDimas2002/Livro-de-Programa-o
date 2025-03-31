@@ -7,15 +7,14 @@ const app = express();
 // Define a porta onde o servidor irá escutar as requisições
 const port = 3001;
 
-// Configura uma rota GET para o caminho raiz ('/')
-// Quando um usuário acessar a URL principal do servidor, a resposta será "Olá... Bem-vindo!"
-app.get('/', (req, res) => {
-    // Envia uma resposta simples de texto para o cliente
-    res.send("Olá... Bem-vindo!");
-});
-
 // Middleware para permitir que o Express faça o parsing (análise) de JSON no corpo das requisições
 app.use(express.json());
+
+// Configura uma rota GET para a URL raiz ('/')
+// Quando um usuário acessar a URL principal do servidor, a resposta será "Olá... Bem-vindo!"
+app.get('/', (req, res) => {
+    res.send("Olá... Bem-vindo!");
+});
 
 // Configura uma rota POST para a URL '/filmes'
 // Essa rota recebe dados do corpo da requisição e responde com uma mensagem formatada
@@ -29,22 +28,22 @@ app.post('/filmes', (req, res) => {
 
 // Middleware de logging que registra a data e hora da requisição
 const log = (req, res, next) => {
-    // Exibe no console a data e hora exata em que a rota foi acessada
-    console.log(`.................. Acessado em ${new Date()}`);
-
-    // Chama a próxima função na cadeia de middlewares (ou o handler da rota)
-    next();
+    console.log(`.................. Acessado em ${new Date()}`); // Exibe no console a data e hora exata da requisição
+    next(); // Passa a execução para o próximo middleware ou rota
 }
 
-// Configura uma rota GET para "/transfere"
-// Essa rota utiliza o middleware 'log' antes de responder à requisição
+// Configura uma rota GET para "/transfere", utilizando o middleware 'log' antes de responder
 app.get("/transfere", log, (req, res) => {
-    // Responde ao cliente confirmando a transferência
     res.send("Ok! Valor transferido com sucesso!");
 });
 
+// Importa o arquivo de rotas "livros.js" que gerencia as operações relacionadas a livros
+const livros = require("./livros");
+
+// Define um prefixo "/livros" para todas as rotas dentro do módulo "livros.js"
+app.use("/livros", livros);
+
 // Inicia o servidor para escutar na porta definida
 app.listen(port, () => {
-    // Exibe uma mensagem no console indicando que o servidor está rodando e acessível
     console.log(`Servidor rodando em http://localhost:${port}`);
 });

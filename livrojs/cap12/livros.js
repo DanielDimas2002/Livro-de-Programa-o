@@ -4,6 +4,10 @@ const express = require("express");
 // Cria um roteador para definir as rotas de "livros"
 const router = express.Router();
 
+// Importa o CORS para permitir requisições de diferentes origens
+const cors = require("cors");
+router.use(cors());
+
 // Importa a configuração do banco de dados usando Knex.js
 const dbKnex = require("./data/db_config");
 
@@ -18,9 +22,9 @@ router.get("/", async (req, res) => {
 
         // Retorna os livros em formato JSON com código HTTP 200 (sucesso)
         res.status(200).json(livros);
-    } catch (erro) {
+    } catch (error) {
         // Em caso de erro, retorna um status 400 e a mensagem do erro
-        res.status(400).json({ msg: erro.message });
+        res.status(400).json({ msg: error.message });
     }
 });
 
@@ -93,9 +97,72 @@ router.delete("/:id", async (req, res) => {
     }
 });
 
+/**
+ * ROTA GET - FILTRAR LIVROS POR PALAVRA-CHAVE
+ * Retorna uma lista de livros que contenham a palavra-chave no título ou no nome do autor.
+ */
+router.get("/filtro/:palavra", async (req, res) => {
+    // Obtém a palavra-chave dos parâmetros da URL
+    const palavra = req.params.palavra;
+    
+    try {
+        // Busca os livros cujo título ou autor contenham a palavra-chave
+        const livros = await dbKnex("livros")
+            .where("titulo", "like", `%${palavra}%`)
+            .orWhere("autor", "like", `%${palavra}%`);
 
+        // Retorna a lista de livros encontrados
+        res.status(200).json(livros);
+    } catch (error) {
+        // Em caso de erro, retorna status 400 e a mensagem do erro
+        res.status(400).json({ msg: error.message });
+    }
+});
 
+/**
+ * ROTA GET - RESUMO DOS DADOS DA TABELA
+ * Retorna um resumo com o número total de livros, soma total dos preços,
+ * maior preço encontrado e média dos preços.
+ */
+router.get("/dados/resumo", async (req, res) => {
+    try {
+        // Realiza uma consulta agregada na tabela de livros
+        const consulta = await dbKnex("livros")
+            .count({ num: "*" }) // Conta o número total de livros
+            .sum({ soma: "preco" }) // Soma os preços de todos os livros
+            .max({ maior: "preco" }) // Encontra o maior preço
+            .avg({ media: "preco" }); // Calcula a média dos preços
 
+        // Extrai os dados do resultado da consulta
+        const { num, soma, maior, media } = consulta[0];
+
+        // Retorna os dados formatados, com a média arredondada para duas casas decimais
+        res.status(200).json({ num, soma, maior, media: Number(media.toFixed(2)) });
+    } catch (error) {
+        // Em caso de erro, retorna status 400 e a mensagem do erro
+        res.status(400).json({ msg: error.message });
+    }
+});
+
+/**
+ * ROTA GET - OBTÉM DADOS PARA GRÁFICO DE PREÇOS POR ANO
+ * Retorna uma soma total dos preços dos livros agrupados por ano.
+ */
+router.get("/dados/grafico", async (req, res) => {
+    try {
+        // Consulta que agrupa os preços dos livros por ano
+        const totalPorAno = await dbKnex("livros")
+            .select("ano") // Seleciona o ano do livro
+            .sum({ total: "preco" }) // Soma os preços agrupados por ano
+            .groupBy("ano"); // Agrupa os resultados por ano
+
+        // Retorna os dados em formato JSON
+        res.status(200).json(totalPorAno);
+    } catch (error) {
+        // Em caso de erro, retorna status 400 e a mensagem do erro
+        res.status(400).json({ msg: error.message });
+    }
+});
 
 // Exporta o roteador para ser utilizado no servidor principal
 module.exports = router;
